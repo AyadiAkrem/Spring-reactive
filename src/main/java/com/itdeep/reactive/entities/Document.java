@@ -1,10 +1,12 @@
 package com.itdeep.reactive.entities;
 
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 
 @org.springframework.data.mongodb.core.mapping.Document
+@Data
 public class Document {
 
     @Id
@@ -20,27 +22,4 @@ public class Document {
         this.fileName = fileName;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 }

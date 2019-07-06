@@ -1,0 +1,31 @@
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Users
+    </div>
+    <div class="card-body">
+        <div class="table-responsive" id="user-table">
+            <table cellspacing="0" class="table table-bordered" id="dataTable" width="100%">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>lastName</th>
+                    <th>email</th>
+                    <th>active</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="result" data-th-each="user : ${users}">
+                    <td>[[${user.firstName}]]</td>
+                    <td>[[${user.lastName}]]</td>
+                    <td>[[${user.email}]]</td>
+                    <td>[[${user.active}]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+
+</div>
