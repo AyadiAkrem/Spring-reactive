@@ -24,6 +24,15 @@ public class User {
         this.email = String.format("%s.%s@itdeep.com", firstName, lastName);
     }
 
+    public User(User user) {
+        this.id = user.id;
+        this.password = user.password;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.active = user.active;
+    }
+
     public String getId() {
         return id;
     }

@@ -2,6 +2,7 @@ package com.itdeep.reactive.controller;
 
 import com.itdeep.reactive.entities.User;
 import com.itdeep.reactive.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +24,11 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping(path = "")
@@ -50,6 +54,7 @@ public class UserController {
             return addUser(user, model);
         }
         return Mono.just(user)
+                .doOnSuccess(u -> u.setPassword(passwordEncoder.encode(u.getPassword())))
                 .flatMap(this.userRepository::save)
                 .then(displayUsers(model));
     }
