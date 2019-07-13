@@ -7,15 +7,19 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http
+        http.csrf().requireCsrfProtectionMatcher(
+                serverWebExchange ->
+                        ServerWebExchangeMatchers.pathMatchers("/urls-with-csrf-check/**").matches(serverWebExchange))
+                .and()
                 .authorizeExchange()
-                .pathMatchers("/login", "/css/***", "/user/add").permitAll()
+                .pathMatchers("/login", "/css/***", "/vendor/**", "/js/**", "/user/add").permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic().and()

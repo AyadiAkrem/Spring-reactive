@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.spring5.context.webflux.IReactiveDataDriverContextVariable;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -35,9 +34,7 @@ public class UserController {
     public Mono<String> displayUsers(Model model) {
         //Simulate big list of data, streaming it every 2 second delay
         Flux<User> userFlux = userRepository.findAll().delayElements(Duration.ofSeconds(2));
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(userFlux, 1);
-        model.addAttribute("users", reactiveDataDrivenMode);
+        model.addAttribute("users", new ReactiveDataDriverContextVariable(userFlux, 1));
         model.addAttribute("templateFile", "pages/user");
         return Mono.just("index");
     }
